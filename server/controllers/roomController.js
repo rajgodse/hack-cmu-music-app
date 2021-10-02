@@ -131,7 +131,7 @@ const roomSubmitPlaylist = async (req, res) => {
     userData.hasSubmitted = true;
     userData.playlist = req.body.playlist;
     console.log(artistData);
-    for (const song in userData.playlist) {
+    for (const song of req.body.playlist) {
       const found = artistData.find((x) => x.artist === song.artist);
       if (!found) {
         console.log("not a duplicate");
