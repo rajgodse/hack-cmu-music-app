@@ -14,7 +14,7 @@ const roomCreate = async (req, res) => {
       host: user,
       users: [
         {
-          id: user.userId,
+          id: req.session.userId,
           hasSubmitted: false,
           hasVoted: false,
           playlist: [],
