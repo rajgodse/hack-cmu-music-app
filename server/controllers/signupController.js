@@ -12,8 +12,8 @@ const signupPost = async (req, res) => {
     await user.save();
     req.session.userId = user._id;
     res.redirect("/home/");
-  } catch {
-    res.json("No account associated with that user! Sign up!");
+  } catch (err) {
+    res.json(err);
   }
 };
 
