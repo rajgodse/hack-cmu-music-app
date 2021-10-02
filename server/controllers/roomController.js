@@ -141,10 +141,7 @@ const roomSubmitPlaylist = async (req, res) => {
       status: "ok",
     });
   } catch (err) {
-    res.send({
-      status: "error",
-      error: err,
-    });
+    res.json(err);
   }
 };
 
