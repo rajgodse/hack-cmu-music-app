@@ -47,7 +47,10 @@ const roomIndex = async (req, res) => {
     console.log(req.params.roomId);
     const id = req.params.roomId;
     const room = await Room.findById(id);
-    res.send(room);
+    res.send({
+      status: "ok",
+      room,
+    });
   } catch (err) {
     res.json(err);
   }
