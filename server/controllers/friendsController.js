@@ -10,7 +10,7 @@ const friendsSend = async (req, res) => {
       ...friends,
     });
   } catch (err) {
-    res.error(err);
+    res.json(err);
   }
 };
 
@@ -22,7 +22,7 @@ const friendsAdd = async (req, res) => {
     await user.save();
     res.redirect("/friends/");
   } catch {
-    res.error(err);
+    res.json(err);
   }
 };
 

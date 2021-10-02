@@ -16,7 +16,7 @@ const roomCreate = async (req, res) => {
     await room.save();
     res.redirect(`/room/${room._id}`);
   } catch (err) {
-    res.error(err);
+    res.json(err);
   }
 };
 
@@ -24,7 +24,7 @@ const roomJoin = (req, res) => {
   try {
     res.redirect(`/room/${req.body.roomId}`);
   } catch (err) {
-    res.error(err);
+    res.json(err);
   }
 };
 
@@ -34,7 +34,7 @@ const roomIndex = async (req, res) => {
     const room = await Room.findById(id);
     res.send(room);
   } catch (err) {
-    res.error(err);
+    res.json(err);
   }
 };
 
@@ -52,10 +52,10 @@ const roomCreatePlaylist = async (req, res) => {
         randomizedSerialDictatorship(userPreferences, req.body.targetLength)
       );
     } else {
-      res.error("No method specified!");
+      res.json("No method specified!");
     }
   } catch (err) {
-    res.error(res);
+    res.json(res);
   }
 };
 
@@ -70,7 +70,7 @@ const roomUpdatePreferences = async (req, res) => {
     userPrefs.playlists = playlists;
     await room.save();
   } catch (err) {
-    res.error(err);
+    res.json(err);
   }
 };
 
