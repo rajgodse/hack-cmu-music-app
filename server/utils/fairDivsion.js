@@ -53,8 +53,20 @@ const evaluate = (userPreference, song) => {
   return 0;
 };
 
+const approvalBasedAllotment = (artistData, targetLength) => {
+  artistData.sort((a, b) => b.approval - a.approval);
+  let i = 0;
+  let playlist = [];
+  while (targetLength > 0 && i < artistData.length) {
+    playlist = playlist.concat(artistData.songs.slice(0, targetLength));
+    targetLength -= artistData.songs.length;
+  }
+  return playlist;
+};
+
 module.exports = {
   utilitarianAssignment,
   egalitarianAssignment,
   randomizedSerialDictatorship,
+  approvalBasedAllotment,
 };

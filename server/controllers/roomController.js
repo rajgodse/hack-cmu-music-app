@@ -4,6 +4,7 @@ const {
   utilitarianAssignment,
   egalitarianAssignment,
   randomizedSerialDictatorship,
+  approvalBasedAllotment,
 } = require("../utils/fairDivsion");
 
 const roomCreate = async (req, res) => {
@@ -78,8 +79,16 @@ const roomCreatePlaylist = async (req, res) => {
       res.json(
         randomizedSerialDictatorship(userPreferences, req.body.targetLength)
       );
+    } else if (req.body.method == "aba") {
+      res.send({
+        status: "ok",
+        playlist: approvalBasedAllotment(
+          room.artistData,
+          req.body.targetLength
+        ),
+      });
     } else {
-      res.json("No method specified!");
+      res.json("Invalid method specified!");
     }
   } catch (err) {
     res.json(res);
@@ -115,6 +124,18 @@ const roomSubmitPlaylist = async (req, res) => {
     }
     userData.hasSubmitted = true;
     userData.playlist = req.body.playlist;
+    for (const song in playlist) {
+      const found = artistData.find((x) => x.artist === song.artist);
+      if (!found) {
+        artistData.push({
+          artist: song.artist,
+          songs: [song.id],
+          approval: 0,
+        });
+      } else {
+        found.songs.push(song.id);
+      }
+    }
     await room.save();
     res.send({
       status: "ok",
