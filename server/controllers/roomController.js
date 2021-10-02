@@ -11,7 +11,14 @@ const roomCreate = async (req, res) => {
     const user = await User.findById(req.session.userId);
     const room = new Room({
       host: user,
-      users: [user],
+      users: [
+        {
+          id: user.userId,
+          hasSubmitted: false,
+          hasVoted: false,
+          playlist: [],
+        },
+      ],
     });
     await room.save();
     req.session.roomId = room._id;
@@ -28,8 +35,10 @@ const roomJoin = async (req, res) => {
   try {
     const room = await Room.findById(req.body.roomId);
     room.users.push({
-      userId,
+      id: req.session.userId,
+      hasSubmitted: false,
       hasVoted: false,
+      playlist: [],
     });
     room.save();
     req.session.roomId = room._id;
@@ -92,6 +101,32 @@ const roomUpdatePreferences = async (req, res) => {
   }
 };
 
+const roomSubmitPlaylist = async (req, res) => {
+  try {
+    const id = req.params.roomId;
+    const room = await Room.findById(id);
+    const userData = room.users.find((x) => x.id === req.session.userId);
+    if (userData.hasSubmitted) {
+      res.send({
+        status: "error",
+        message: "User has already submitted!",
+      });
+      return;
+    }
+    userData.hasSubmitted = true;
+    userData.playlist = req.body.playlist;
+    await room.save();
+    res.send({
+      status: "ok",
+    });
+  } catch (err) {
+    res.send({
+      status: "error",
+      error: err,
+    });
+  }
+};
+
 const playlistsToArtistDict = (playlists) => {
   return {
     artist: "",
@@ -126,4 +161,5 @@ module.exports = {
   roomIndex,
   roomCreatePlaylist,
   roomUpdatePreferences,
+  roomSubmitPlaylist,
 };
