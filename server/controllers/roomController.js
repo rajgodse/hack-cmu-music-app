@@ -24,7 +24,7 @@ const roomCreate = async (req, res) => {
   }
 };
 
-const roomJoin = (req, res) => {
+const roomJoin = async (req, res) => {
   try {
     const room = await Room.findById(req.session.roomId);
     room.users.push({
