@@ -76,9 +76,7 @@ const roomCreatePlaylist = async (req, res) => {
     } else if (req.body.method == "egalitarian") {
       res.json(egalitarianAssignment(userPreferences, req.body.targetLength));
     } else if (req.body.method == "rsd") {
-      res.json(
-        randomizedSerialDictatorship(userPreferences, req.body.targetLength)
-      );
+      res.json(randomizedSerialDictatorship(userPreferences, 20));
     } else if (req.body.method == "aba") {
       res.send({
         status: "ok",
