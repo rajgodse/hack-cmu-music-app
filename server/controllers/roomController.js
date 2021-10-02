@@ -80,10 +80,7 @@ const roomCreatePlaylist = async (req, res) => {
     } else if (req.body.method == "aba") {
       res.send({
         status: "ok",
-        playlist: approvalBasedAllotment(
-          room.artistData,
-          req.body.targetLength
-        ),
+        playlist: approvalBasedAllotment(room.artistData, 20),
       });
     } else {
       res.json({
