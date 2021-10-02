@@ -14,6 +14,7 @@ const roomCreate = async (req, res) => {
       users: [user],
     });
     await room.save();
+    req.session.roomId = room._id;
     res.json({
       status: "ok",
       roomId: room._id,
@@ -25,7 +26,17 @@ const roomCreate = async (req, res) => {
 
 const roomJoin = (req, res) => {
   try {
-    res.redirect(`/room/${req.body.roomId}`);
+    const room = await Room.findById(req.session.roomId);
+    room.users.push({
+      userId,
+      hasVoted: false,
+    });
+    room.save();
+    req.session.roomId = room._id;
+    res.json({
+      status: "ok",
+      roomId: room._id,
+    });
   } catch (err) {
     res.json(err);
   }
@@ -88,9 +99,21 @@ const playlistsToArtistDict = (playlists) => {
 const roomArtistPreferences = async (req, res) => {
   try {
     const id = req.params.roomId;
+    const room = await Room.findById(id);
+    const playlists = req.body.playlists;
+    room.artistData = playlistsToArtistDict(playlists);
+    room.save();
+    res.send(room.artistData);
   } catch (err) {
     res.json(err);
   }
+};
+
+const roomUpdateArtistPreferences = async (req, res) => {
+  try {
+    const id = req.params.roomId;
+    const room = Room.findById(id);
+  } catch (err) {}
 };
 
 module.exports = {
