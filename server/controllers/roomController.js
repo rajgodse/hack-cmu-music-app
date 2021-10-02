@@ -113,8 +113,13 @@ const roomUpdatePreferences = async (req, res) => {
 const roomSubmitPlaylist = async (req, res) => {
   try {
     const id = req.params.roomId;
+    console.log(id);
     const room = await Room.findById(id);
+    console.log(room._id);
     const userData = room.users.find((x) => x.id === req.session.userId);
+    const artistData = room.artistData;
+    console.log(!userData || userData);
+    console.log(req.body);
     if (userData.hasSubmitted) {
       res.send({
         status: "error",
@@ -124,7 +129,8 @@ const roomSubmitPlaylist = async (req, res) => {
     }
     userData.hasSubmitted = true;
     userData.playlist = req.body.playlist;
-    for (const song in playlist) {
+    console.log(artistData);
+    for (const song in userData.playlist) {
       const found = artistData.find((x) => x.artist === song.artist);
       if (!found) {
         artistData.push({
@@ -136,6 +142,7 @@ const roomSubmitPlaylist = async (req, res) => {
         found.songs.push(song.id);
       }
     }
+    console.log(artistData);
     await room.save();
     res.send({
       status: "ok",
