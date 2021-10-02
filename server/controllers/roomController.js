@@ -148,11 +148,46 @@ const roomArtistPreferences = async (req, res) => {
   }
 };
 
-const roomUpdateArtistPreferences = async (req, res) => {
+const roomBallot = async (req, res) => {
+  try {
+    const id = req.params.roomId;
+    const room = await Room.findById(id);
+    res.send({
+      status: "ok",
+      artists: room.artistData.map((x) => x.artist),
+    });
+  } catch (err) {
+    res.send({
+      status: "error",
+      error: err,
+    });
+  }
+};
+
+const roomVote = async (req, res) => {
   try {
     const id = req.params.roomId;
     const room = Room.findById(id);
-  } catch (err) {}
+    const userData = room.users.find((x) => x.id === req.session.userId);
+    if (userData.hasVoted) {
+      res.send({
+        status: "error",
+        message: "User has already voted!",
+      });
+      return;
+    }
+    userData.hasVoted = true;
+    for (const { artist, approval } in req.body.artistPreferences) {
+      const currData = room.artistData.find((x) => x.artist === artist);
+      currData.approval += approval;
+    }
+    await room.save();
+  } catch (err) {
+    res.send({
+      status: "error",
+      error: err,
+    });
+  }
 };
 
 module.exports = {
@@ -162,4 +197,6 @@ module.exports = {
   roomCreatePlaylist,
   roomUpdatePreferences,
   roomSubmitPlaylist,
+  roomBallot,
+  roomVote,
 };
