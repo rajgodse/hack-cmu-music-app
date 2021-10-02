@@ -23,9 +23,9 @@ const userSchema = new Schema({
     },
   ],
   preferences: {
-    type: [String],
+    type: Object,
     required: true,
-    default: [],
+    default: {},
   },
 });
 

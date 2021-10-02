@@ -5,6 +5,7 @@ const session = require("express-session");
 const loginRoutes = require("./routes/loginRoutes");
 const signupRoutes = require("./routes/signupRoutes");
 const friendRoutes = require("./routes/friendsRoutes");
+const roomRoutes = require("./routes/roomRoutes");
 
 const URI = process.env.URI;
 const app = express();
@@ -19,6 +20,13 @@ mongoose
 app.listen(3001);
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 app.get("/", (req, res) => {
   res.json({
@@ -29,3 +37,4 @@ app.get("/", (req, res) => {
 app.use("/login", loginRoutes);
 app.use("/signup", signupRoutes);
 app.use("/friends", friendRoutes);
+app.use("/room", roomRoutes);

@@ -51,3 +51,9 @@ const evaluateSong = (userPreferences, song, objective) => {
 const evaluate = (userPreference, song) => {
   return 0;
 };
+
+module.exports = {
+  utilitarianAssignment,
+  egalitarianAssignment,
+  randomizedSerialDictatorship,
+};
