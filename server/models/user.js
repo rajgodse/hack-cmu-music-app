@@ -15,11 +15,13 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  friends: {
-    type: [String],
-    required: true,
-    default: [],
-  },
+  friends: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+  ],
   preferences: {
     type: [String],
     required: true,
