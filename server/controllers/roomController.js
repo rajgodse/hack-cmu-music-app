@@ -68,6 +68,7 @@ const roomIndex = async (req, res) => {
 
 const roomCreatePlaylist = async (req, res) => {
   try {
+    console.log("WE HAVE RECEIVED THE DATA");
     const id = req.params.roomId;
     const room = await Room.findById(id);
     const userPreferences = room.artistData;
@@ -78,9 +79,10 @@ const roomCreatePlaylist = async (req, res) => {
     } else if (req.body.method == "rsd") {
       res.json(randomizedSerialDictatorship(userPreferences, 20));
     } else if (req.body.method == "aba") {
+      const allotment = approvalBasedAllotment(room.artistData, 20);
       res.send({
         status: "ok",
-        playlist: approvalBasedAllotment(room.artistData, 20),
+        playlist: allotment,
       });
     } else {
       res.json({
