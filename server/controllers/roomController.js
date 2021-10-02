@@ -88,7 +88,10 @@ const roomCreatePlaylist = async (req, res) => {
         ),
       });
     } else {
-      res.json("Invalid method specified!");
+      res.json({
+        status: "error",
+        error: "Invalid method specified!",
+      });
     }
   } catch (err) {
     res.json(res);

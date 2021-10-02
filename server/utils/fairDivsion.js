@@ -54,6 +54,7 @@ const evaluate = (userPreference, song) => {
 };
 
 const approvalBasedAllotment = (artistData, targetLength) => {
+  console.log(artistData);
   artistData.sort((a, b) => b.approval - a.approval);
   let i = 0;
   let playlist = [];
@@ -61,6 +62,7 @@ const approvalBasedAllotment = (artistData, targetLength) => {
     playlist = playlist.concat(artistData.songs.slice(0, targetLength));
     targetLength -= artistData.songs.length;
   }
+  console.log(playlist);
   return playlist;
 };
 
