@@ -2,6 +2,7 @@ const User = require("../models/user");
 
 const signupPost = async (req, res) => {
   try {
+    console.log(req.body)
     const user = new User({
       username: req.body.username,
       first: req.body.first,
@@ -11,7 +12,7 @@ const signupPost = async (req, res) => {
     });
     await user.save();
     req.session.userId = user._id;
-    res.redirect("/home/");
+    res.json({status :'ok'})
   } catch (err) {
     res.json(err);
   }

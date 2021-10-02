@@ -6,6 +6,7 @@ const loginRoutes = require("./routes/loginRoutes");
 const signupRoutes = require("./routes/signupRoutes");
 const friendRoutes = require("./routes/friendsRoutes");
 const roomRoutes = require("./routes/roomRoutes");
+const bodyParser = require("body-parser")
 
 const URI = process.env.URI;
 const app = express();
@@ -19,7 +20,9 @@ mongoose
 
 app.listen(3002);
 app.use(express.static("public"));
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(bodyParser.json());
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
