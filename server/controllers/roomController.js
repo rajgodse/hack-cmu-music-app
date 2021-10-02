@@ -26,7 +26,7 @@ const roomCreate = async (req, res) => {
 
 const roomJoin = async (req, res) => {
   try {
-    const room = await Room.findById(req.session.roomId);
+    const room = await Room.findById(req.body.roomId);
     room.users.push({
       userId,
       hasVoted: false,
@@ -44,6 +44,7 @@ const roomJoin = async (req, res) => {
 
 const roomIndex = async (req, res) => {
   try {
+    console.log(req.params.roomId);
     const id = req.params.roomId;
     const room = await Room.findById(id);
     res.send(room);
