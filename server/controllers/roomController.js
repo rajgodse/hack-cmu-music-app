@@ -118,6 +118,7 @@ const roomSubmitPlaylist = async (req, res) => {
     console.log(room._id);
     const userData = room.users.find((x) => x.id === req.session.userId);
     const artistData = room.artistData;
+    console.log(artistData);
     console.log(!userData || userData);
     console.log(req.body);
     if (userData.hasSubmitted) {
@@ -141,7 +142,7 @@ const roomSubmitPlaylist = async (req, res) => {
         });
       } else {
         console.log("It's a duplicate");
-        console.log(found.songs);
+        // console.log(found.songs);
         found.songs.push(song.id);
       }
     }
