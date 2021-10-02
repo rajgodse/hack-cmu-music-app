@@ -10,9 +10,6 @@ const randomizedSerialDictatorship = (userPreferences, targetLength) => {
   return playlist;
 };
 
-const utilitarianAssignment = maximizeObjective(utilityObjective);
-const egalitarianAssignment = maximizeObjective(egalitarianObjective);
-
 const maximizeObjective = (objective) => {
   return (userPreferences, targetLength) => {
     return userPreferences
@@ -32,9 +29,13 @@ const utilityObjective = (array) => {
   return array.reduce((x, y) => x + y);
 };
 
+const utilitarianAssignment = maximizeObjective(utilityObjective);
+
 const egalitarianObjective = (array) => {
   return Math.min(...array);
 };
+
+const egalitarianAssignment = maximizeObjective(egalitarianObjective);
 
 const shuffleArray = (array) => {
   for (let i = array.length - 1; i > 0; i--) {

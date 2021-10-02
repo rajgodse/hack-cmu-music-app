@@ -38,7 +38,7 @@ const roomIndex = async (req, res) => {
   }
 };
 
-const roomCreatePlaylist = (req, res) => {
+const roomCreatePlaylist = async (req, res) => {
   try {
     const id = req.params.roomId;
     const room = await Room.findById(id);
@@ -59,7 +59,7 @@ const roomCreatePlaylist = (req, res) => {
   }
 };
 
-const roomUpdatePreferences = (req, res) => {
+const roomUpdatePreferences = async (req, res) => {
   try {
     const id = req.params.roomId;
     const playlists = req.body.playlists;

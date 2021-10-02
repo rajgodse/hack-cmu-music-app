@@ -17,7 +17,7 @@ mongoose
   .then((_) => app.listen(3001))
   .catch((error) => console.log(error));
 
-app.listen(3001);
+app.listen(3002);
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
 app.use(
