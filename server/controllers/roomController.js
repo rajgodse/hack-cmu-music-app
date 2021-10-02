@@ -70,7 +70,7 @@ const roomCreatePlaylist = async (req, res) => {
   try {
     const id = req.params.roomId;
     const room = await Room.findById(id);
-    const userPreferences = room.playlists;
+    const userPreferences = room.artistData;
     if (req.body.method === "utilitarian") {
       res.json(utilitarianAssignment(userPreferences, req.body.targetLength));
     } else if (req.body.method == "egalitarian") {
