@@ -7,6 +7,13 @@ const roomSchema = new Schema({
     ref: "User",
     required: true,
   },
+  users: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  artistData: [Object],
   userPreferences: [
     {
       user: {

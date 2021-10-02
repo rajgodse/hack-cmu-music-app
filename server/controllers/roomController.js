@@ -14,7 +14,10 @@ const roomCreate = async (req, res) => {
       users: [user],
     });
     await room.save();
-    res.redirect(`/room/${room._id}`);
+    res.json({
+      status: "ok",
+      roomId: room._id,
+    });
   } catch (err) {
     res.json(err);
   }
@@ -69,6 +72,22 @@ const roomUpdatePreferences = async (req, res) => {
     );
     userPrefs.playlists = playlists;
     await room.save();
+  } catch (err) {
+    res.json(err);
+  }
+};
+
+const playlistsToArtistDict = (playlists) => {
+  return {
+    artist: "",
+    songs: [],
+    approval: 0,
+  };
+};
+
+const roomArtistPreferences = async (req, res) => {
+  try {
+    const id = req.params.roomId;
   } catch (err) {
     res.json(err);
   }
