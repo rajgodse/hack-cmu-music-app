@@ -133,18 +133,22 @@ const roomSubmitPlaylist = async (req, res) => {
     for (const song in userData.playlist) {
       const found = artistData.find((x) => x.artist === song.artist);
       if (!found) {
+        console.log("not a duplicate");
         artistData.push({
           artist: song.artist,
           songs: [song.id],
           approval: 0,
         });
       } else {
+        console.log("It's a duplicate");
+        console.log(found.songs);
         found.songs.push(song.id);
       }
     }
+    console.log("Out of the loop");
     console.log(artistData);
     await room.save();
-    res.send({
+    res.json({
       status: "ok",
     });
   } catch (err) {
